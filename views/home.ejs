@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short URL Generator</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Short URL Generator</h1>
+    </div>
+    <% if (locals.id) { %>
+        <div class="container">
+            <h2>Your Short URL:</h2>
+            <p>http://localhost:8001/url/<%= locals.id %></p>
+        </div>
+    <% } %>
+   <form method="POST" action="/url">
+        <label for="redirectURL">Enter Your Original URL:</label>
+        <input type="text" id="redirectURL" name="redirectURL" placeholder="Enter the URL to shorten" required>
+        <button type="submit">Generate Short URL</button>
+        <div id="result"></div>
+   </form>
+
+   <div>
+    <% if (locals.urls) { %>
+        <table>
+            <thead>
+                <th> S. no</th>
+                <th> ShortID </th>
+                <th> Redirect </th>
+                <th> Clicks </th>
+            </thead>
+            <tbody>
+                <% urls.forEach((element, index) => { %> 
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= element.shortId %></td>
+                        <td><%= element.redirectURL %></td>
+                        <td><%= element.visitHistory.length %></td>
+                    </tr>
+                <% }) %>
+            </tbody> 
+        </table>
+    <% } %>
+   </div>
+   
+</body> 
+</html>
